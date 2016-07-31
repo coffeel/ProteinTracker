@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 15, 2013 2:53:22 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.company.User" table="USERS">
+        <id name="id" type="int">
+            <column name="ID"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME"/>
+        </property>
+        <component name="proteinData">
+            <property name="total" type="int">
+                <column name="TOTAL"/>
+            </property>
+            <property name="goal" type="int">
+                <column name="GOAL"/>
+            </property>
+        </component>
+        <map name="history" table="USER_HISTORY">
+            <key column="ID"></key>
+            <map-key type="java.lang.String" column="ENTRY_IDENTIFIER"></map-key>
+            <composite-element class="com.company.UserHistory">
+                <property name="entry" type="java.lang.String" column="ENTRY"></property>
+                <property name="entryTime" type="java.util.Date" column="ENTRY_TIME"></property>
+            </composite-element>
+        </map>
+    </class>
+</hibernate-mapping>
