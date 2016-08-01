@@ -9,8 +9,12 @@ public class User {
     private int id;
     private String name;
     private ProteinData proteinData = new ProteinData();
-//    private List<UserHistory> history = new ArrayList<>();
-    private Map<String, UserHistory> history = new HashMap<>();
+    private List<UserHistory> history = new ArrayList<>();
+    private Set<GoalAlert> goalAlerts = new HashSet<>();
+
+    public User() {
+        setProteinData(new ProteinData());
+    }
 
     public int getId() {
         return id;
@@ -34,13 +38,27 @@ public class User {
 
     public void setProteinData(ProteinData proteinData) {
         this.proteinData = proteinData;
+        proteinData.setUser(this);
     }
 
-    public Map<String, UserHistory> getHistory() {
+    public List<UserHistory> getHistory() {
         return history;
     }
 
-    public void setHistory(Map<String, UserHistory> history) {
+    public void setHistory(List<UserHistory> history) {
         this.history = history;
+    }
+
+    public void addHistory(UserHistory historyItem) {
+        historyItem.setUser(this);
+        this.history.add(historyItem);
+    }
+
+    public Set<GoalAlert> getGoalAlerts() {
+        return goalAlerts;
+    }
+
+    public void setGoalAlerts(Set<GoalAlert> goalAlerts) {
+        this.goalAlerts = goalAlerts;
     }
 }

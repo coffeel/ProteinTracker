@@ -25,14 +25,15 @@ public class Main {
         System.out.println(loadedUser.getName());
         System.out.println(loadedUser.getProteinData().getGoal());
 
-        for (Map.Entry<String, UserHistory> history : loadedUser.getHistory().entrySet()) {
-            System.out.println(history.getKey());
-            System.out.println(history.getValue().getEntryTime().toString() + ":" + history.getValue());
+        for (UserHistory history : loadedUser.getHistory()) {
+            System.out.println(history.getEntryTime().toString() + ":" + history);
         }
 
         //Update
         loadedUser.getProteinData().setTotal(loadedUser.getProteinData().getTotal() + 50);
-        loadedUser.getHistory().put("GPL123", new UserHistory(new Date(), "Add 50 protein"));
+        loadedUser.addHistory(new UserHistory(new Date(), "Add 50 protein"));
+
+        loadedUser.setProteinData(new ProteinData());
 
         session.getTransaction().commit();
         session.close();
@@ -46,9 +47,12 @@ public class Main {
 
         User user = new User();
         user.setName("Jim");
-        user.getHistory().put("GPL122", new UserHistory(new Date(), "Set Name to Jim"));
+        user.addHistory(new UserHistory(new Date(), "Set Name to Jim"));
         user.getProteinData().setGoal(250);
-        user.getHistory().put("GPL112",new UserHistory(new Date(), "Set the goal to 250"));
+        user.addHistory(new UserHistory(new Date(), "Set the goal to 250"));
+
+        user.getGoalAlerts().add(new GoalAlert("Congratulations!"));
+        user.getGoalAlerts().add(new GoalAlert("You did it!"));
 
         session.save(user);
         session.getTransaction().commit();

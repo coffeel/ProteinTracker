@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Jul 15, 2013 2:53:22 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.company.User" table="USERS">
@@ -11,21 +11,19 @@
         <property name="name" type="java.lang.String">
             <column name="NAME"/>
         </property>
-        <component name="proteinData">
-            <property name="total" type="int">
-                <column name="TOTAL"/>
-            </property>
-            <property name="goal" type="int">
-                <column name="GOAL"/>
-            </property>
-        </component>
-        <map name="history" table="USER_HISTORY">
-            <key column="ID"></key>
-            <map-key type="java.lang.String" column="ENTRY_IDENTIFIER"></map-key>
-            <composite-element class="com.company.UserHistory">
-                <property name="entry" type="java.lang.String" column="ENTRY"></property>
-                <property name="entryTime" type="java.util.Date" column="ENTRY_TIME"></property>
-            </composite-element>
-        </map>
+
+        <many-to-one name="proteinData" class="com.company.ProteinData" column="PROTEIN_DATA_ID" cascade="save-update"
+                     unique="true"/>
+
+        <list name="history" table="USER_HISTORY" inverse="true" cascade="save-update">
+            <key column="USER_ID"></key>
+            <list-index column="POSITION"/>
+            <one-to-many class="com.company.UserHistory"/>
+        </list>
+
+        <set name="goalAlerts" table="USER_GOALALERT" cascade="save-update">
+            <key column="USER_ID"></key>
+            <many-to-many class="com.company.GoalAlert" column="GOALALERT_ID"/>
+        </set>
     </class>
 </hibernate-mapping>

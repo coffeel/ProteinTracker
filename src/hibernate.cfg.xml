@@ -12,5 +12,8 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
         <mapping resource="com/company/User.hbm.xml"/>
+        <mapping resource="com/company/UserHistory.hbm.xml"/>
+        <mapping resource="com/company/ProteinData.hbm.xml"/>
+        <mapping resource="com/company/GoalAlert.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
