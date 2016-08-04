@@ -61,4 +61,15 @@ public class User {
     public void setGoalAlerts(Set<GoalAlert> goalAlerts) {
         this.goalAlerts = goalAlerts;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", proteinData=" + proteinData +
+                ", history=" + history +
+                ", goalAlerts=" + goalAlerts +
+                '}';
+    }
 }

@@ -8,21 +8,15 @@ public class HibernateUtilities {
 
     private static SessionFactory sessionFactory;
 
-    static
-    {
-        try
-        {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-            int i=0+11;
-        }
-        catch(HibernateException exception)
-        {
+    static {
+        try {
+            sessionFactory = new Configuration().setInterceptor(new AuditInterceptor()).configure().buildSessionFactory();
+        } catch (HibernateException exception) {
             System.out.println("Problem creating session factory!");
         }
     }
 
-    public static SessionFactory getSessionFactory()
-    {
+    public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 }
